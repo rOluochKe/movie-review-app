@@ -19,8 +19,8 @@ export default function App() {
         <Route path='/auth/signin' element={<Signin />} />
         <Route path='/auth/signup' element={<Signup />} />
         <Route path='/auth/verification' element={<EmailVerification />} />
-        <Route path='/auth/forget-password' element={<ForgetPassword />} />
-        <Route path='/auth/confirm-password' element={<ConfirmPassword />} />
+        <Route path="/auth/forget-password" element={<ForgetPassword />} />
+        <Route path="/auth/reset-password" element={<ConfirmPassword />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>

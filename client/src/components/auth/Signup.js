@@ -10,16 +10,16 @@ import { commonModalClasses } from '../../utils/theme'
 import FormContainer from '../form/FormContainer'
 import { createUser } from '../../api/auth'
 import { useAuth, useNotification } from '../../hooks'
+import { isValidEmail } from "../../utils/helper";
 
 const validateUserInfo = ({ name, email, password }) => {
-  const isValidEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const isValidName = /^[a-z A-Z]+$/;
 
   if (!name.trim()) return { ok: false, error: "Name is missing!" };
   if (!isValidName.test(name)) return { ok: false, error: "Invalid name!" };
 
   if (!email.trim()) return { ok: false, error: "Email is missing!" };
-  if (!isValidEmail.test(email)) return { ok: false, error: "Invalid email!" };
+  if (!isValidEmail(email)) return { ok: false, error: "Invalid email!" };
 
   if (!password.trim()) return { ok: false, error: "Password is missing!" };
   if (password.length < 8)

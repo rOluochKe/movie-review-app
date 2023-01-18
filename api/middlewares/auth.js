@@ -1,18 +1,20 @@
-const jwt = require('jsonwebtoken')
-const { sendError } = require("../utils/helper")
-const User = require('../models/user')
+const jwt = require("jsonwebtoken");
+const { sendError } = require("../utils/helper");
+const User = require("../models/user");
 
-exports.isAuth = () => async (req, res, next) => {
-  const token = req.headers?.authorization
-  const jwToken = token.split('Bearer ')[1]
+exports.isAuth = async (req, res, next) => {
+  const token = req.headers?.authorization;
 
-  if (!jwToken) return sendError(res, 'Inavlid token!')
-  const decode = jwt.verify(jwToken, process.env.JWT_SECRET)
-  const { userId } = decode
+  const jwtToken = token.split("Bearer ")[1];
 
-  const user = await User.findById(userId)
-  if (!user) return sendError(res, 'Invalid token user not found!', 404)
+  if (!jwtToken) return sendError(res, "Invalid token!");
+  const decode = jwt.verify(jwtToken, process.env.JWT_SECRET);
+  const { userId } = decode;
 
-  req.user = user
-  next()
-}
+  const user = await User.findById(userId);
+  if (!user) return sendError(res, "unauthorized access!");
+
+  req.user = user;
+
+  next();
+};
