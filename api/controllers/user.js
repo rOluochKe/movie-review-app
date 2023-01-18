@@ -55,14 +55,12 @@ const verifyEmail = async (req, res) => {
 
   const user = await User.findById(userId)
   if (!user) return sendError(res, 'user not found!', 404)
-
   if (user.isVerified) return sendError(res, 'user is already verified!')
 
   const token = await EmailVerificationToken.findOne({ owner: userId })
   if (!token) return sendError(res, 'token not found!', 404)
 
   const isMatched = await token.compareToken(OTP)
-
   if (!isMatched) return sendError(res, 'Please submit a valid OTP!')
 
   user.isVerified = true
@@ -79,7 +77,11 @@ const verifyEmail = async (req, res) => {
     html: '<h1>Welcome to our Movie Review App and thanks for choosing us.'
   })
 
-  res.json({ message: 'Your email is verified.' })
+  const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET)
+  res.json({ 
+    user: { id: user._id, name: user.name, email: user.email, token:jwtToken }, 
+    message: 'Your email is verified.' 
+  })
 }
 
 const resendEmailVerificationToken = async (req, res) => {
