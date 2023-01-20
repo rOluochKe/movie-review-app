@@ -5,17 +5,17 @@ const Actor = require('../models/actor')
 const { sendError, uploadImageToCloud, formatActor } = require("../utils/helper");
 
 exports.createActor = async (req, res) => {
-  const { name, about, gender } = req.body
-  const { file } = req
+  const { name, about, gender } = req.body;
+  const { file } = req;
 
-  const newActor = new Actor({ name, about, gender })
+  const newActor = new Actor({ name, about, gender });
 
   if (file) {
-    const { url, public_id } = await uploadImageToCloud(file.path)
-    newActor.avatar = { url, public_id }
+    const { url, public_id } = await uploadImageToCloud(file.path);
+    newActor.avatar = { url, public_id };
   }
-  await newActor.save()
-  res.status(201).json(formatActor(newActor))
+  await newActor.save();
+  res.status(201).json(formatActor(newActor));
 } 
 
 exports.updateActor = async (req, res) => {
