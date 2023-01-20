@@ -4,9 +4,11 @@ const morgan = require('morgan')
 require('dotenv').config();
 const cors = require('cors')
 require('./db')
-const userRouter = require('./routes/user');
 const { errorHandler } = require('./middlewares/error');
 const { handleNotFound } = require('./utils/helper');
+
+const userRouter = require('./routes/user');
+const actorRouter = require('./routes/actor')
 
 const app = express()
 app.use(morgan('dev'))
@@ -14,6 +16,7 @@ app.use(express.json())
 app.use(cors())
 
 app.use('/api/user', userRouter)
+app.use('/api/actor', actorRouter)
 
 app.use('/*', handleNotFound)
 app.use(errorHandler)
