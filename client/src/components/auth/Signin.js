@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Container from '../Container'
 import Title from '../form/Title'
 import FormInput from '../form/FormInput'
@@ -44,10 +44,6 @@ export default function Signin () {
     if (!ok) return updateNotification("error", error)
     await handleLogin(userInfo.email, userInfo.password)
   }
-
-  useEffect(() => {
-    if (isLoggedIn) navigate('/')
-  }, [isLoggedIn])
 
   return (
     <FormContainer>
