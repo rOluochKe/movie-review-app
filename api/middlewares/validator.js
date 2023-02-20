@@ -1,27 +1,47 @@
-const { check, validationResult } = require('express-validator')
-const genres = require("../utils/genres");
+const { check, validationResult } = require("express-validator");
 const { isValidObjectId } = require("mongoose");
+const genres = require("../utils/genres");
 
-exports.userValidator = [
-  check('name').trim().not().isEmpty().withMessage('Name is missing!'), 
-  check('email').normalizeEmail().isEmail().withMessage('Email is invalid!'),
-  check('password').trim().not().isEmpty().withMessage('Password is missing!').isLength({ min: 8, max: 20 }).withMessage('Password must be 8 to 20 characters long!')
-]
+exports.userValidtor = [
+  check("name").trim().not().isEmpty().withMessage("Name is missing!"),
+  check("email").normalizeEmail().isEmail().withMessage("Email is invalid!"),
+  check("password")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("Password is missing!")
+    .isLength({ min: 8, max: 20 })
+    .withMessage("Password must be 8 to 20 characters long!"),
+];
 
 exports.validatePassword = [
-  check('newPassword').trim().not().isEmpty().withMessage('New password is missing!').isLength({ min: 8, max: 20 }).withMessage('New password must be 8 to 20 characters long!')
-]
+  check("newPassword")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("Password is missing!")
+    .isLength({ min: 8, max: 20 })
+    .withMessage("Password must be 8 to 20 characters long!"),
+];
 
 exports.signInValidator = [
-  check('email').normalizeEmail().isEmail().withMessage('Email is invalid!'),
-  check('password').trim().not().isEmpty().withMessage('Password is missing!')
-]
+  check("email").normalizeEmail().isEmail().withMessage("Email is invalid!"),
+  check("password").trim().not().isEmpty().withMessage("Password is missing!"),
+];
 
 exports.actorInfoValidator = [
   check("name").trim().not().isEmpty().withMessage("Actor name is missing!"),
-  check("about").trim().not().isEmpty().withMessage("About is a required field!"),
-  check("gender").trim().not().isEmpty().withMessage("Gender is a required field!"),
-]
+  check("about")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("About is a required field!"),
+  check("gender")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("Gender is a required field!"),
+];
 
 exports.validateMovie = [
   check("title").trim().not().isEmpty().withMessage("Movie title is missing!"),
@@ -73,26 +93,7 @@ exports.validateMovie = [
 
       return true;
     }),
-  check("trailer")
-    .isObject()
-    .withMessage("trailer must be an object with url and public_id")
-    .custom(({ url, public_id }) => {
-      try {
-        const result = new URL(url);
-        if (!result.protocol.includes("http"))
-          throw Error("Trailer url is invalid!");
 
-        const arr = url.split("/");
-        const publicId = arr[arr.length - 1].split(".")[0];
-
-        if (public_id !== publicId)
-          throw Error("Trailer public_id is invalid!");
-
-        return true;
-      } catch (error) {
-        throw Error("Trailer url is invalid!");
-      }
-    }),
   // check("poster").custom((_, { req }) => {
   //   if (!req.file) throw Error("Poster file is missing!");
 
@@ -100,12 +101,31 @@ exports.validateMovie = [
   // }),
 ];
 
-exports.validate = (req, res, next) => {
-  const error = validationResult(req).array()
+exports.validateTrailer = check("trailer")
+  .isObject()
+  .withMessage("trailer must be an object with url and public_id")
+  .custom(({ url, public_id }) => {
+    try {
+      const result = new URL(url);
+      if (!result.protocol.includes("http"))
+        throw Error("Trailer url is invalid!");
 
+      const arr = url.split("/");
+      const publicId = arr[arr.length - 1].split(".")[0];
+
+      if (public_id !== publicId) throw Error("Trailer public_id is invalid!");
+
+      return true;
+    } catch (error) {
+      throw Error("Trailer url is invalid!");
+    }
+  });
+
+exports.validate = (req, res, next) => {
+  const error = validationResult(req).array();
   if (error.length) {
-    return res.json({ error: error[0].msg })
+    return res.json({ error: error[0].msg });
   }
 
-  next()
-}
+  next();
+};
