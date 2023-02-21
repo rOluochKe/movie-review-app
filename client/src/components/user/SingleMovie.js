@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { getSingleMovie } from "../../api/movie";
 import { useAuth, useNotification } from "../../hooks";
 import Container from "../Container";
+import AddRatingModal from "../models/AddRatingModal";
 import RatingStar from "../RatingStar";
 import RelatedMovies from "../RelatedMovies";
 
@@ -18,6 +19,7 @@ const convertDate = (date = "") => {
 
 export default function SingleMovie() {
   const [ready, setReady] = useState(false);
+  const [showRatingModal, setShowRatingModal] = useState(false);
   const [movie, setMovie] = useState({});
 
   const { movieId } = useParams();
@@ -37,6 +39,15 @@ export default function SingleMovie() {
 
   const handleOnRateMovie = () => {
     if (!isLoggedIn) return navigate("/auth/signin");
+    setShowRatingModal(true);
+  };
+
+  const hideRatingModal = () => {
+    setShowRatingModal(false);
+  };
+
+  const handleOnRatingSuccess = (reviews) => {
+    setMovie({ ...movie, reviews: { ...reviews } });
   };
 
   useEffect(() => {
@@ -215,6 +226,12 @@ export default function SingleMovie() {
           <RelatedMovies movieId={movieId} />
         </div>
       </Container>
+
+      <AddRatingModal
+        visible={showRatingModal}
+        onClose={hideRatingModal}
+        onSuccess={handleOnRatingSuccess}
+      />
     </div>
   );
 }
