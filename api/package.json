@@ -4,7 +4,8 @@
   "description": "Movie review app like IMDDB",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "Raymond Oluoch",
@@ -25,5 +26,9 @@
   "devDependencies": {
     "dotenv": "^16.0.3",
     "nodemon": "^2.0.20"
+  },
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
   }
 }
