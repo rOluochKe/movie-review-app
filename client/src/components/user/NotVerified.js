@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks";
-import Container from "../Container";
 
 export default function NotVerified() {
   const { authInfo } = useAuth();

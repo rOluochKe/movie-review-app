@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { getTopRatedMovies } from "../../api/movie";
 import { useNotification } from "../../hooks";
-import GridContainer from "../GridContainer";
 import MovieList from "./MovieList";
 
 export default function TopRatedMovies() {
@@ -23,6 +22,7 @@ export default function TopRatedMovies() {
     return () => {
       ac.abort();
     };
+    // eslint-disable-next-line
   }, []);
 
   return <MovieList movies={movies} title="Viewers choice (Movies)" />;

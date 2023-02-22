@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { commonInputClasses } from "../../utils/theme";
 import LiveSearch from "../LiveSearch";
-import { results } from "../admin/MovieForm";
 import { useNotification, useSearch } from "../../hooks";
 import { renderItem } from "../../utils/helper";
 import { searchActor } from "../../api/actor";
+
 // const cast = [{ actor: id, roleAs: "", leadActor: true }];
 const defaultCastInfo = {
   profile: {},
   roleAs: "",
   leadActor: false,
 };
+
 export default function CastForm({ onSubmit }) {
   const [castInfo, setCastInfo] = useState({ ...defaultCastInfo });
   const [profiles, setProfiles] = useState([]);

@@ -92,8 +92,6 @@ export default function LiveSearch({
         onFocus={handleOnFocus}
         value={defaultValue}
         onChange={handleChange}
-        // onBlur={handleOnBlur}
-        // onKeyDown={handleKeyDown}
       />
       <SearchResults
         results={results}
@@ -107,15 +105,6 @@ export default function LiveSearch({
     </div>
   );
 }
-
-// const renderItem = ({ id, name, avatar }) => {
-//   return (
-//     <div className="flex">
-//       <img src={avatar} alt="" />
-//       <p>{name}</p>
-//     </div>
-//   );
-// };
 
 const SearchResults = ({
   visible,

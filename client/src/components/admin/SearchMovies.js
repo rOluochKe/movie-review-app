@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { searchMovieForAdmin, updateMovie } from "../../api/movie";
+import { searchMovieForAdmin } from "../../api/movie";
 import { useNotification } from "../../hooks";
 import MovieListItem from "../MovieListItem";
 import NotFoundText from "../NotFoundText";
@@ -33,7 +33,7 @@ export default function SearchMovies() {
   };
 
   const handleAfterUpdate = (movie) => {
-    console.log("run");
+    // console.log("run");
     const updatedMovies = movies.map((m) => {
       if (m.id === movie.id) return movie;
       return m;
@@ -43,6 +43,7 @@ export default function SearchMovies() {
 
   useEffect(() => {
     if (query.trim()) searchMovies(query);
+    // eslint-disable-next-line
   }, [query]);
 
   return (

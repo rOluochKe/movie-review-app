@@ -62,12 +62,6 @@ export default function MovieForm({ busy, btnTitle, initialState, onSubmit }) {
     finalMovieInfo.tags = JSON.stringify(tags);
     finalMovieInfo.genres = JSON.stringify(genres);
 
-    // {
-    //   actor: { type: mongoose.Schema.Types.ObjectId, ref: "Actor" },
-    //   roleAs: String,
-    //   leadActor: Boolean,
-    // },
-
     const finalCast = cast.map((c) => ({
       actor: c.profile.id,
       roleAs: c.roleAs,

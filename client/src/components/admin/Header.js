@@ -66,10 +66,6 @@ const CreateOptions = ({ options, visible, onClose }) => {
 
       if (parentElement.id === containerID || id === containerID) return;
 
-      // Old Code (Before React 18)
-      // container.current.classList.remove("animate-scale");
-      // container.current.classList.add("animate-scale-reverse");
-
       // New Update
       if (container.current) {
         if (!container.current.classList.contains("animate-scale"))
