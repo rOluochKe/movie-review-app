@@ -12,6 +12,7 @@ import NotFound from './components/NotFound';
 import AdminNavigator from './navigator/AdminNavigator';
 import SingleMovie from "./components/user/SingleMovie";
 import MovieReviews from "./components/user/MovieReviews";
+import SearchMovies from "./components/user/SearchMovies";
 
 import { useAuth } from './hooks'
 
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="/auth/reset-password" element={<ConfirmPassword />} />
         <Route path="/movie/:movieId" element={<SingleMovie />} />
         <Route path="/movie/reviews/:movieId" element={<MovieReviews />} />
+        <Route path="/movie/search" element={<SearchMovies />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>
